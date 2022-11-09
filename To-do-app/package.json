@@ -1,0 +1,9 @@
+{ 
+  "scripts": {
+    "to-do-app:scss": "node-sass  styles/style.scss  styles/style.css"
+
+},
+  "dependencies": {
+    "node-sass": "^8.0.0"
+  }
+}
