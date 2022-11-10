@@ -55,10 +55,14 @@
   .todo-list {
     min-width: 30%;
     list-style: none;
+  
+  
+    
+
   }
   
-  .todo {
-    margin: 0.5rem;
+  .todo{
+    
     background: white;
     color: black;
     font-size: 1.5rem;
@@ -66,13 +70,33 @@
     justify-content: space-between;
     align-items: center;
     transition: all 0.5s ease;
+    margin-top: 20px;
+  
+   align-items: center;
+   position: relative;
+ 
+  
+   
+
   }
   
-  .todo li {
+  .todo-item  {
     flex: 1;
-  }
   
-  .trash-btn,
+
+    
+  }
+  .trash-btn{
+    font-size: 18px;
+    height: 2.4rem;
+    position: absolute;
+    margin-left: 469px;
+   
+  }
+
+
+  
+
   .complete-btn {
     background: #ffe100;
     color: black;
@@ -88,6 +112,7 @@
   
   .todo-item {
     padding: 0rem 0.5rem;
+    
   }
   
   .fa-trash,
