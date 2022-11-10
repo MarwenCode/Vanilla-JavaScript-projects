@@ -81,11 +81,11 @@ function getTodos() {
     } else {
       todos = JSON.parse(localStorage.getItem("items"));
     }
-    todos.forEach(function (todo) {
+    todos.forEach((todo) => {
       const todoDiv = document.createElement("div");
       todoDiv.classList.add("todoo");
       const newTodo = document.createElement("li");
-      newTodo.innerText = todo;
+      newTodo.innerText = todo.content;
       console.log(todo)
       newTodo.classList.add("todo");
       todoList.appendChild(newTodo);
