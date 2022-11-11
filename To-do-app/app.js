@@ -1,8 +1,8 @@
 const todoInput = document.querySelector(".todo-input");
 const todoButton = document.querySelector(".todo-button");
 const todoList = document.querySelector(".todo-list");
+const deleteBtn = document.querySelector("delete-btn");
 const container = document.querySelector(".app");
-
 
 document.addEventListener("DOMContentLoaded", getTodos);
 
@@ -12,15 +12,13 @@ const createItemElement = (id, content) => {
   return element;
 };
 
-
-
 // localStorage
-
-// JSON.parse(window.localStorage.getItem('items'));
 
 const getItemsLocalStorage = () => {
   return JSON.parse(localStorage.getItem("items") || "[] ");
 };
+
+// console.log(getItemsLocalStorage());
 
 const setItemsLocalStorage = (notes) => {
   localStorage.setItem("items", JSON.stringify(notes));
@@ -29,6 +27,7 @@ const setItemsLocalStorage = (notes) => {
 //const add to do
 const addTodo = (e) => {
   const items = getItemsLocalStorage();
+
   e.preventDefault();
 
   const valueInput = todoInput.value;
@@ -40,148 +39,85 @@ const addTodo = (e) => {
 
   console.log(itemObject);
 
-  //   const element = document.createElement("div")
   createItemElement(itemObject.id, itemObject.content);
-  // itemElement.classList.add("todo")
+
   const newTodo = document.createElement("li");
   newTodo.textContent = valueInput;
-  //    newTodo.classList.add("todo-item");
+
   newTodo.classList.add("todo");
   todoList.appendChild(newTodo);
   items.push(itemObject);
 
   //create delete button
-  const deleteButton = document.createElement("button");
-  deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
-  deleteButton.classList.add("trash-btn");
-  newTodo.appendChild(deleteButton);
-  //   todoList.appendChild(itemElement)
-  // todoList.insertBefore(itemElement, deleteButton)
-  todoInput.value = "";
-  //   localStorage.setItem("todos", JSON.stringify(todos));
-  setItemsLocalStorage(items);
-//   showTasks()
+  const deleteBtn = document.createElement("button");
 
+  deleteBtn.innerHTML = ` <button type="button" class="delete-btn">
+  <i class="fas fa-trash"></i>
+</button>`;
+
+  deleteBtn.classList.add("delete-btn");
+  newTodo.appendChild(deleteBtn);
+
+  todoInput.value = "";
+
+  setItemsLocalStorage(items);
 };
+
+function getTodos() {
+  let todos;
+  if (localStorage.getItem("items") === null) {
+    todos = [];
+  } else {
+    todos = JSON.parse(localStorage.getItem("items"));
+  }
+  todos.forEach((todo) => {
+    const todoDiv = document.createElement("div");
+    todoDiv.classList.add("todoo");
+    const newTodo = document.createElement("li");
+    newTodo.innerText = todo.content;
+    console.log(todo);
+    newTodo.classList.add("todo");
+    todoList.appendChild(newTodo);
+
+    const deleteBtn = document.createElement("button");
+
+    deleteBtn.innerHTML = ` <button type="button" class="delete-btn">
+      <i class="fas fa-trash"></i>
+    </button>`;
+    deleteBtn.classList.add("delete-btn");
+
+    newTodo.appendChild(deleteBtn);
+    todoList.appendChild(todoDiv);
+  });
+}
+
 //click button
 todoButton.addEventListener("click", addTodo);
 
+//delete items
+const deleteItem = (e) => {
+ 
 
-
-function getTodos() {
-    // const itemObject = {
-    //     id: new Date().getTime(),
-    //     content: valueInput,
-    //   };
-    getitems = getItemsLocalStorage()
-
-    let todos;
-    if (localStorage.getItem("items") === null) {
-      todos = [];
-    } else {
-      todos = JSON.parse(localStorage.getItem("items"));
-    }
-    todos.forEach((todo) => {
-      const todoDiv = document.createElement("div");
-      todoDiv.classList.add("todoo");
-      const newTodo = document.createElement("li");
-      newTodo.innerText = todo.content;
-      console.log(todo)
-      newTodo.classList.add("todo");
-      todoList.appendChild(newTodo);
-    //   todoDiv.appendChild(newTodo);
-      const trashButton = document.createElement("button");
-      trashButton.innerHTML = '<li class="fas fa-trash"></li>';
-      trashButton.classList.add("trash-btn");
-    //   todoDiv.appendChild(trashButton);
-    newTodo.appendChild(trashButton);
-      todoList.appendChild(todoDiv);
-    //   container.appendChild(todoList)
-    });
+  if (e.target.parentElement.classList.contains("delete-btn")) {
+    e.target.parentElement.parentElement.remove();
+     // Remove from local storage
+     removeTaskFromLocalStorage(e.target.parentElement.parentElement);
   }
+  console.log(e.target);
+};
 
+todoList.addEventListener("click", deleteItem);
 
-
-
-
-
-
-
-
-
-// const showTasks = () => {
-//     let getLocalStorage = localStorage.getItem("items")
-//     if(getLocalStorage == null) {
-//         listarray = []
-//     }else {
-//         listarray = JSON.parse(getLocalStorage)
-//     }
-// }
-
-
-
-
-// showTasks()
-
-
-
-
-
-
-
-// window.onload(localStorage.getItem("items"))
-
-
-
-
-// create List item
-
-// function setupItems() {
-//     let items = getItemsLocalStorage();
+// removeTaskFromLocalStorage function
+function removeTaskFromLocalStorage(index) {
+ 
+  const items = getItemsLocalStorage();
+  console.log(items)
   
-//     if (items.length > 0) {
-//       items.forEach( (item) => {
-//         createListItem(item.id, item.value);
-//       });
-//     //   container.classList.add("todo-container");
-//     }
-//   }
+  items.splice(index, 1)
+
+  setItemsLocalStorage(items)
 
 
 
-
-// const createListItem = (id, value) => {
-//   const items = getItemsLocalStorage();
-// //   e.preventDefault();
-
-//   const valueInput = todoInput.value;
-
-//   const itemObject = {
-//     id: new Date().getTime(),
-//     content: "",
-//   };
-
-//   console.log(itemObject);
-
-//   createItemElement(itemObject.id, itemObject.content);
-
-//   const newTodo = document.createElement("li");
-//   newTodo.textContent = valueInput;
-
-//   newTodo.classList.add("todo");
-//   todoList.appendChild(newTodo);
-//   items.push(itemObject);
-
-//   //create delete button
-//   const deleteButton = document.createElement("button");
-//   deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
-//   deleteButton.classList.add("trash-btn");
-//   newTodo.appendChild(deleteButton);
-//   items.push(itemObject);
-
-// };
-
-
-
-//   window.addEventListener("DOMContentLoaded", setupItems);
-// //  window.addEventListener("load", getItemsLocalStorage())
+}
