@@ -58,6 +58,14 @@ const addTodo = (e) => {
   deleteBtn.classList.add("delete-btn");
   newTodo.appendChild(deleteBtn);
 
+  //create edit button
+//   const editBtn = document.createElement("button");
+//   editBtn.innerHTML = ` <button type="button" class="delete-btn">
+//   <i class="fa fa-edit"></i>
+// </button>`;
+//   editBtn.classList.add("edit-btn");
+//   newTodo.appendChild(editBtn);
+
   todoInput.value = "";
 
   setItemsLocalStorage(items);
@@ -71,8 +79,8 @@ function getTodos() {
     todos = JSON.parse(localStorage.getItem("items"));
   }
   todos.forEach((todo) => {
-    const todoDiv = document.createElement("div");
-    todoDiv.classList.add("todoo");
+    // const todoDiv = document.createElement("div");
+    // todoDiv.classList.add("todoo");
     const newTodo = document.createElement("li");
     newTodo.innerText = todo.content;
     console.log(todo);
@@ -87,7 +95,16 @@ function getTodos() {
     deleteBtn.classList.add("delete-btn");
 
     newTodo.appendChild(deleteBtn);
-    todoList.appendChild(todoDiv);
+
+    //create edit button
+//     const editBtn = document.createElement("button");
+//     editBtn.innerHTML = ` <button type="button" class="delete-btn">
+//   <i class="fa fa-edit"></i>
+// </button>`;
+//     editBtn.classList.add("edit-btn");
+//     newTodo.appendChild(editBtn);
+
+    todoList.appendChild(newTodo);
   });
 }
 
@@ -96,28 +113,46 @@ todoButton.addEventListener("click", addTodo);
 
 //delete items
 const deleteItem = (e) => {
- 
-
   if (e.target.parentElement.classList.contains("delete-btn")) {
     e.target.parentElement.parentElement.remove();
-     // Remove from local storage
-     removeTaskFromLocalStorage(e.target.parentElement.parentElement);
+    // Remove from local storage
+    removeTaskFromLocalStorage(e.target.parentElement.parentElement);
   }
   console.log(e.target);
 };
 
 todoList.addEventListener("click", deleteItem);
 
+// const editItem = (e) => {
+//   // let editElement
+//   // const valueInput = todoInput.value;
+//   // const element = e.currentTarget.parentElement.parentElement
+//   // editElement = e.currentTarget.parentElement.previousElementSibling;
+//   // valueInput = editElement.innerHTML
+//   // editId = element.id
+//   // todoButton.textContent = "edit"
+//   // let selectedTask = e.parentElement.parentElement;
+
+//   // todoInput.value = selectedTask.children[0].innerHTML;
+//   if (e.target.parentElement.classList.contains("edit-btn")) {
+//     e.target.parentElement.parentElement.textContent = todoInput.value;
+//   }
+
+//   console.log("Edit Task...");
+// console.log("Change 'edit' to 'save'");
+
+// }
+
+//edit item
+// const editBtn = document.querySelector(".edit-btn");
+// editBtn.addEventListener("click", editItem);
+
 // removeTaskFromLocalStorage function
 function removeTaskFromLocalStorage(index) {
- 
   const items = getItemsLocalStorage();
-  console.log(items)
-  
-  items.splice(index, 1)
+  console.log(items);
 
-  setItemsLocalStorage(items)
+  items.splice(index, 1);
 
-
-
+  setItemsLocalStorage(items);
 }
